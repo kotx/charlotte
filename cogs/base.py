@@ -10,7 +10,7 @@ from cogs.utils import paste
 
 async def run_cmd(cmd: str) -> str:
     """Runs a subprocess and returns the output."""
-    process = await asyncio.create_subprocess_shell(cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE, )
+    process = await asyncio.create_subprocess_shell(cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
     results = await process.communicate()
     return "".join(x.decode("utf-8") for x in results)
 
@@ -27,6 +27,10 @@ class Base:
     @commands.command(aliases=['latency', 'pong'])
     async def ping(self, ctx):
         await ctx.send(f'w-what do you want from me? p-pong! ({round(self.bot.latency*1000)}ms)')
+
+    @commands.command()
+    async def botinfo(self, ctx):
+        e = discord.Embed()
 
     # Owner Stuff
 
