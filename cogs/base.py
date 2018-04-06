@@ -56,7 +56,7 @@ class Base:
 
     @commands.command()
     async def botinfo(self, ctx):
-        '''Y-you wanna learn about me? uwu'''
+        '''Y-you wanna learn about me? p-perv!'''
         total_members = sum(1 for x in self.bot.get_all_members())
         total_online = len({m.id for m in self.bot.get_all_members() if m.status is not discord.Status.offline})
         total_unique = len(self.bot.users)
@@ -66,7 +66,9 @@ class Base:
         shard_num = ctx.guild.shard_id
         python_version = sys.version.split()[0]
         library_version = discord.__version__
-        codeblock = f'```ini\n' + f'[ Bot Info ]\n' + \
+        codeblock = f'```ini\n' + f'[ Bot Info ]\n\n' + \
+                f'Website: https://charlotte.torque.ink\n' + \
+                f'Bot Owner(s) {self.bot.owner_id}\n' + \
                 f'Total Users: {total_members}\n' + \
                 f'Total Online Users: {total_online}\n' + \
                 f'Total Unique Users: {total_unique}\n' + \
