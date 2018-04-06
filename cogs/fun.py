@@ -14,6 +14,26 @@ class Fun:
         self.weeb = sh_client = weeb.Client(token=bot.config.weebsh, user_agent="Weeb.py/1.1.0")
 
     @commands.command()
+    async def xkcd(self, ctx, number=None):
+        '''Get an xkcd comic.'''
+        try:
+            number = int(number)
+        except:
+            if number is not None:
+                return await ctx.send('Can you do math baka?! That\'s not a number! >~<')
+        if isinstance(number, int):
+            ra = await self.bot.session.get(url=f'https://xkcd.com/{number}/info.0.json')
+            r = await ra.json()
+        else:
+            raw = await self.bot.session.get(url='https://xkcd.com/info.0.json')
+            r = await raw.json()
+        
+        e = discord.Embed(title=r['safe_title'], description='xkcd - {}\n\n{}'.format(r['num'], r['alt']))
+        e.set_image(url=r['img'])
+        e.set_footer(text=f'{r["month"]}/{r["day"]}/{r["year"]} (mm/dd/yyyy)', icon_url='https://i.imgur.com/9sSBA52.jpg')
+        await ctx.send(embed=e)
+
+    @commands.command()
     async def pat(self, ctx, user: discord.User=None):
         '''Pat someone.'''
         img = await self.weeb.get_image(imgtype='pat')

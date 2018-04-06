@@ -68,7 +68,7 @@ class Base:
         library_version = discord.__version__
         codeblock = f'```ini\n' + f'[ Bot Info ]\n\n' + \
                 f'Website: https://charlotte.torque.ink\n' + \
-                f'Bot Owner(s) {self.bot.owner_id}\n' + \
+                f'Bot Owner(s): {self.bot.owner_id}\n' + \
                 f'Total Users: {total_members}\n' + \
                 f'Total Online Users: {total_online}\n' + \
                 f'Total Unique Users: {total_unique}\n' + \
