@@ -63,6 +63,7 @@ class Base:
                 '\n'.join([f'{shard}. online' for shard in self.bot.shards]) + \
                 '```'
         e = discord.Embed(description=codeblock)
+        await ctx.send(embed=e)
 
     # Owner Stuff
 
