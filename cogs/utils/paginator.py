@@ -61,7 +61,7 @@ class Pages:
         if left_over:
             pages += 1
         self.maximum_pages = pages
-        self.embed = discord.Embed(colour=discord.Colour.blurple())
+        self.embed = discord.Embed()
         self.paginating = len(entries) > per_page
         self.show_entry_count = show_entry_count
         self.reaction_emojis = [
@@ -639,7 +639,6 @@ class HelpPaginator(Pages):
         self.prefix = cleanup_prefix(ctx.bot, ctx.prefix)
 
         # no longer need the database
-        await ctx.release()
 
         return self
 
@@ -662,7 +661,6 @@ class HelpPaginator(Pages):
             self.description = command.help or 'No help given.'
 
         self.prefix = cleanup_prefix(ctx.bot, ctx.prefix)
-        await ctx.release()
         return self
 
     @classmethod
@@ -697,7 +695,6 @@ class HelpPaginator(Pages):
         self = cls(ctx, nested_pages,
                    per_page=1)  # this forces the pagination session
         self.prefix = cleanup_prefix(ctx.bot, ctx.prefix)
-        await ctx.release()
 
         # swap the get_page implementation with
         # one that supports our style of pagination

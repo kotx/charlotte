@@ -5,7 +5,6 @@ from discord.ext import commands
 import discord
 import config
 import aiohttp
-from tinydb import TinyDB, Query
 
 class Bot(commands.AutoShardedBot):
     def __init__(self, **kwargs):
