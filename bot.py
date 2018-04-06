@@ -10,7 +10,7 @@ class Bot(commands.AutoShardedBot):
     def __init__(self, **kwargs):
         super().__init__(command_prefix=commands.when_mentioned_or('$'), **kwargs)
         self.config = config
-        self.session = aiohttp.ClientSession()
+        self.session = aiohttp.ClientSession(loop=self.loop)
         for cog in config.cogs:
             try:
                 self.load_extension(cog)

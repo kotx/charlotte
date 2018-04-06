@@ -23,11 +23,11 @@ class Guilds:
             await self.update_guild_count()
    
     async def on_guild_join(self, guild):
-        if self.bot.config['dbl'] or self.bot.config.terminal:
+        if self.bot.config.dbl or self.bot.config.terminal:
             await self.update_guild_count()
     
     async def on_guild_remove(self, guild):
-        if self.bot.config['dbl'] or self.bot.config.terminal:
+        if self.bot.config.dbl or self.bot.config.terminal:
             await self.update_guild_count()
 
 def setup(bot):
