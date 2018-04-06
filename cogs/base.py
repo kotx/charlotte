@@ -82,6 +82,15 @@ class Base:
         e = discord.Embed(description=codeblock)
         await ctx.send(embed=e)
 
+    @commands.command()
+    async def shardinfo(self, ctx):
+        '''Gets info about my shards'''
+        codeblock = f'```ini\n' + f'[ Shard Info ]\n\n' + \
+                '\n'.join([f'{shard}. {round(self.bot.latencies[shard][1]*1000)}ms' for shard in self.bot.shards]) + \
+                '```'
+        e = discord.Embed(description=codeblock)
+        await ctx.send(embed=e)
+
     # Owner Stuff
 
     def cleanup_code(self, content):
