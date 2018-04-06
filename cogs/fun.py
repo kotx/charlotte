@@ -12,6 +12,62 @@ class Fun:
     def __init__(self, bot):
         self.bot = bot
         self.weeb = sh_client = weeb.Client(token=bot.config.weebsh, user_agent="Weeb.py/1.1.0")
+    
+    @commands.command()
+    async def cat(self, ctx):
+        '''Get a random cat image.'''
+        
+        fact = await self.bot.session.get(url='https://catfact.ninja/fact')
+        fact = await fact.json()
+        e = discord.Embed(color=ctx.author.color, description=fact['fact'])
+        resp = await self.bot.session.get(url='https://aws.random.cat/meow')
+        resp = await resp.json()
+        e.set_image(url=resp['file'])
+
+        e.set_footer(text='Powered by random.cat')
+        await ctx.send(embed=e)
+
+    @commands.command()
+    async def dog(self, ctx):
+        '''Get a random dog image.'''
+        e = discord.Embed(color=ctx.author.color)
+        resp = await self.bot.session.get(url='https://random.dog/woof.json')
+        resp = await resp.json()
+        e.set_image(url=resp['url'])
+        e.set_footer(text='Powered by random.dog')
+        await ctx.send(embed=e)
+
+    @commands.command()
+    async def birb(self, ctx):
+        '''Get a random birb image.'''
+        e = discord.Embed(color=ctx.author.color)
+        resp = await self.bot.session.get(url='https://random.birb.pw/tweet.json')
+        resp = await resp.json(content_type='text/plain')
+        e.set_image(url=f'https://random.birb.pw/img/{resp["file"]}')
+        e.set_footer(text='Powered by random.birb.pw')
+        await ctx.send(embed=e)
+
+    @commands.command()
+    async def neko(self, ctx):
+        '''Gets a random neko :3'''
+        e = discord.Embed(color=ctx.author.color)
+        resp = await self.bot.session.get(url='https://nekos.life/api/neko')
+        resp = await resp.json()
+        e.set_image(url=resp['neko'])
+        e.set_footer(text='Powered by nekos.life')
+        await ctx.send(embed=e)
+
+    @commands.command()
+    @commands.is_nsfw()
+    async def lewdneko(self, ctx):
+        '''Gets a random lewd neko o.o'''
+        e = discord.Embed(color=ctx.author.color)
+        resp = await self.bot.session.get(url='https://nekos.life/api/lewd/neko')
+        resp = await resp.json()
+        e.set_image(url=resp['neko'])
+        e.set_footer(text='Powered by nekos.life')
+        await ctx.send(embed=e)
+
 
     @commands.command()
     async def xkcd(self, ctx, number=None):
