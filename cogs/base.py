@@ -7,6 +7,7 @@ from contextlib import redirect_stdout
 from discord.ext import commands
 import discord
 from cogs.utils import paste
+import textwrap
 
 async def run_cmd(cmd: str) -> str:
     """Runs a subprocess and returns the output."""
@@ -26,11 +27,42 @@ class Base:
 
     @commands.command(aliases=['latency', 'pong'])
     async def ping(self, ctx):
+        '''W-what are you looking at! P-pong!'''
         await ctx.send(f'w-what do you want from me? p-pong! ({round(self.bot.latency*1000)}ms)')
 
     @commands.command()
     async def botinfo(self, ctx):
-        e = discord.Embed()
+        '''Y-you wanna learn about me? uwu'''
+        total_members = sum(1 for x in self.bot.get_all_members())
+        total_online = len({m.id for m in self.bot.get_all_members() if m.status is not discord.Status.offline})
+        total_unique = len(self.bot.users)
+        total_bots = len([m.id for m in self.bot.get_all_members() if m.bot])
+        total_servers = len(self.bot.guilds)
+        total_shards = self.bot.shard_count
+        shard_num = ctx.guild.shard_id
+        python_version = sys.version.split()[0]
+        library_version = discord.__version__
+        codeblock = f'```ini\n' + f'[ Bot Info ]\n' + \
+                f'Total Users: {total_members}\n' + \
+                f'Total Online Users: {total_online}\n' + \
+                f'Total Unique Users: {total_unique}\n' + \
+                f'Total Bots: {total_bots}\n' + \
+                f'Total Guilds: {total_servers}\n' + \
+                f'Total Shards: {total_shards}\n' + \
+                f'Shard: {shard_num}/{total_shards}\n' + \
+                f'Python Version: {python_version}\n' + \
+                f'Library: discord.py {library_version}\n' + \
+                f'```'
+        e = discord.Embed(description=codeblock)
+        await ctx.send(embed=e)
+
+    @commands.command()
+    async def shardinfo(self, ctx):
+        '''Information about my shards baka'''
+        codeblock = '```ini\n' + \
+                '\n'.join([f'{shard}. online' for shard in self.bot.shards]) + \
+                '```'
+        e = discord.Embed(description=codeblock)
 
     # Owner Stuff
 

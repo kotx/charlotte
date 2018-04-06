@@ -21,6 +21,9 @@ class Bot(commands.AutoShardedBot):
         print('Logged on as {0} (ID: {0.id})'.format(self.user))
         await self.change_presence(activity=discord.Game(name=f'$help | {len(bot.guilds)} guilds'))
 
+    async def on_message(self, message):
+        if not message.author.bot:
+            await bot.process_commands(message)
 
 bot = Bot()
 
