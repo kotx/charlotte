@@ -17,7 +17,8 @@ class Premium:
 
     def is_premium():
         async def predicate(ctx):
-            if True: # ctx.author.id in self.bot.upvoters:
+            i = await ctx.bot.redis.get(ctx.author.id)
+            if i:
                 return True
             raise UserIsNotPremium(f'{ctx.author} is not premium')
         return commands.check(predicate)
@@ -33,7 +34,7 @@ class Premium:
         font = ImageFont.truetype("fonts/arial.ttf", 30)
 
         draw.text((100, 220), '\n'.join(textwrap.wrap(peasants, 13)), (0, 0, 0), font)
-        draw.text((300, 90), '\n'.join(textwrap.wrap(masterrace, 13)), (0, 0, 0), font)
+        draw.text((350, 90), '\n'.join(textwrap.wrap(masterrace, 10)), (0, 0, 0), font)
 
         img.save(f'cache/peasants/{ctx.author.id}.png')
         await ctx.send(file=discord.File(fp=f'cache/peasants/{ctx.author.id}.png'))
