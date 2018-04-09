@@ -68,7 +68,6 @@ class Fun:
         e.set_footer(text='Powered by nekos.life')
         await ctx.send(embed=e)
 
-
     @commands.command()
     async def xkcd(self, ctx, number=None):
         '''Get an xkcd comic.'''
@@ -105,19 +104,38 @@ class Fun:
         else:
             e = discord.Embed()
         e.set_image(url=img[0])
+        e.set_footer(text='Powered by weeb.sh')
         await ctx.send(embed=e)
 
     @commands.command()
-    async def bite(self, ctx, user: discord.User=None):
-        '''Bite someone.'''
-        img = await self.weeb.get_image(imgtype='bite')
+    async def weeb(self, ctx, type=None):
+        '''Fetch a type from weeb.sh. Call without args to get a list of types.'''
+        head = {'Authorization': f'Wolke {self.config.weebsh}'}
+        types = self.config.weebtypes['types']
+        if type:
+            if type in types:
+                e = discord.Embed(color=ctx.author.color)
+                resp = await self.get(url=f'https://api.weeb.sh/images/random?type={type}', head=head)
+                resp = await resp.json()
+                e.set_image(url=resp['url'])
+                e.set_footer(text='Powered by weeb.sh')
+                await ctx.send(embed=e)
+            else:
+                await ctx.send(f'```{types}```')
+        else:
+            await ctx.send(content=f'```{types}```')
+
+    @commands.command()
+    async def slap(self, ctx, user: discord.User=None):
+        '''Slap someone.'''
+        img = await self.weeb.get_image(imgtype='slap')
         if user:
             if user.id == ctx.author.id:
-                e = discord.Embed(description=f'{ctx.author.name} bit themselves \o/')
+                e = discord.Embed(description=f'{ctx.author.name} slapped themselves \o/')
             elif user.id == self.bot.user.id:
-                e = discord.Embed(description=f'N-nooo!')
+                e = discord.Embed(description=f'N-nooo! Baka!')
             else:
-                e = discord.Embed(description=f'{ctx.author.name} bit {user.name}')
+                e = discord.Embed(description=f'{ctx.author.name} slapped {user.name} \o/')
         else:
             e = discord.Embed()
         e.set_image(url=img[0])

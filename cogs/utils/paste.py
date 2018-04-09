@@ -25,7 +25,6 @@ async def haste(session: aiohttp.ClientSession, text: str) -> str:
 
     async with session.post(HASTEBIN_ENDPOINT, data=text) as resp:
         resp_json = await resp.json()
-        print(resp_json)
         return HASTEBIN_FMT.format(resp_json['key'])
 
 
