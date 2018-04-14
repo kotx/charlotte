@@ -26,7 +26,7 @@ class Premium:
     @is_premium()
     @commands.command()
     async def fbi(self, ctx, *, search: str):
-        '''OwO FBI looking for u'''
+        '''OwO FBI i-is looking for u'''
         img = Image.open(f'images/fbi.jpg')
         draw = ImageDraw.Draw(img)
         font = ImageFont.truetype('fonts/arial.ttf', 30)
@@ -52,7 +52,7 @@ class Premium:
         os.remove('cache/thesearch/{ctx.author.id}.png')
 
     @is_premium()
-    @commands.command()
+    @commands.command(aliases=['peasants'])
     async def masterrace(self, ctx, *, args):
         '''Declare something as the master race. Separate with ' | '.'''
         masterrace = args.split(' | ')[0]
