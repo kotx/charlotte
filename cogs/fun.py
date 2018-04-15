@@ -17,6 +17,7 @@ class Fun:
 
     @commands.command()
     async def explosion(self, ctx):
+        '''Megumin is here!'''
         url = await self.bot.session.get('https://megumin.torque.ink/api/explosion')
         res = await url.json()
 
@@ -35,12 +36,23 @@ class Fun:
         
         fact = await self.bot.session.get(url='https://catfact.ninja/fact')
         fact = await fact.json()
-        e = discord.Embed(color=ctx.author.color, description=fact['fact'])
+        e = discord.Embed(description=fact['fact'])
         resp = await self.bot.session.get(url='https://aws.random.cat/meow')
         resp = ujson.loads(await resp.text())
         e.set_image(url=resp['file'])
 
         e.set_footer(text='Powered by random.cat')
+        await ctx.send(embed=e)
+
+    @commands.command()
+    async def duck(self, ctx):
+        '''Gets a random duck image.'''
+
+        e = discord.Embed()
+        resp = await self.bot.session.get(url='https://api.random-d.uk/random')
+        resp = await resp.json()
+        e.set_image(url=resp['url'])
+        e.set_footer(text='Powered by random-d.uk')
         await ctx.send(embed=e)
 
     @commands.command()

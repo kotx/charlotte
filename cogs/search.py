@@ -105,7 +105,7 @@ class Search:
                 to_send = text
         await ctx.send(to_send)
 
-    @commands.command(aliases=['ddg', 'duck', 'google', 'goog'])
+    @commands.command(aliases=['ddg'])
     async def duckduckgo(self, ctx, *, query: str):
         """Search the DuckDuckGo Instant Answer API"""
         await ctx.channel.trigger_typing()
