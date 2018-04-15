@@ -5,6 +5,7 @@ import discord
 import random
 import wolframalpha
 import functools
+import urllib.parse
 from cogs.utils.paginator import EmbedPages
 
 class Search:
@@ -24,6 +25,42 @@ class Search:
                                 'That is anybody\'s guess.',
                                 'Beats me.',
                                 'I haven\'t the faintest idea.']
+
+    @commands.command()
+    async def urban(self, ctx, *, term: str):
+        """Find the definition to \"wagwan\" or something """
+
+        term = urllib.parse.quote_plus(term) # make the search term url-safe
+
+        url = await self.bot.session.get(f'http://api.urbandictionary.com/v0/define?term={term}')
+        res = await url.json()
+
+        if res is None:
+            return await ctx.send("Something went wrong...")
+
+        count = len(res['list'])
+        if count == 0:
+            return await ctx.send("Didn\'t get any results...")
+        result = res['list'][random.randint(0, count - 1)]
+
+        definition = result['definition']
+        if len(definition) >= 1000:
+            definition = definition[:1000]
+            definition = definition.rsplit(' ', 1)[0]
+            definition += '...'
+
+        embed = discord.Embed(colour=0xcf5c36, description=f"**{result['word']}**\n*by: {result['author']}*")
+        embed.add_field(name='Definition', value=definition, inline=False)
+        embed.add_field(name='Example', value=result['example'], inline=False)
+        embed.set_footer(text=f"👍 {result['thumbs_up']} | 👎 {result['thumbs_down']}")
+        embed.set_author(name=f"Requested by {ctx.author.name}",
+                         url=f"http://api.urbandictionary.com/v0/define?term={term}",
+                         icon_url=ctx.author.avatar_url)
+
+        try:
+            await ctx.send(embed=embed)
+        except discord.Forbidden:
+            await ctx.send("Insufficient permissions - d-do I have the \"Embed Links\" permission?")
 
     @commands.command()
     async def wolfram(self, ctx, *, query):
