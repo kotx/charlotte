@@ -4,18 +4,36 @@ from discord.ext import commands
 import discord
 import weeb
 import os.path
+import ujson
 import random
+import urllib.parse
 
 class Fun:
     """W-want to have some f-fun with me?"""
 
     def __init__(self, bot):
         self.bot = bot
-        self.weeb = sh_client = weeb.Client(token=bot.config.weebsh, user_agent="Weeb.py/1.1.0")
+        self.weeb = weeb.Client(token=bot.config.weebsh, user_agent="Weeb.py/1.1.0")
+
+    @commands.command()
+    async def explosion(self, ctx):
+        url = await self.bot.session.get('https://megumin.torque.ink/api/explosion')
+        res = await url.json()
+
+        if res is None:
+            return await ctx.send('Something broke. Try again later?')
+
+        e = discord.Embed(color=discord.Color.red(), title='Explosion!')
+        e.description = res['chant']
+        e.set_image(url=res['img'])
+        e.set_footer(text='Powered by megumin.torque.ink')
+        await ctx.send(embed=e)
 
     @commands.command()
     async def urban(self, ctx, *, term: str):
         """Find the definition to \"wagwan\" or something """
+
+        term = urllib.parse.quote_plus(term) # make the search term url-safe
 
         url = await self.bot.session.get(f'http://api.urbandictionary.com/v0/define?term={term}')
         res = await url.json()
@@ -55,7 +73,7 @@ class Fun:
         fact = await fact.json()
         e = discord.Embed(color=ctx.author.color, description=fact['fact'])
         resp = await self.bot.session.get(url='https://aws.random.cat/meow')
-        resp = await resp.json()
+        resp = ujson.loads(await resp.text())
         e.set_image(url=resp['file'])
 
         e.set_footer(text='Powered by random.cat')
@@ -141,23 +159,19 @@ class Fun:
         e.set_footer(text='Powered by weeb.sh')
         await ctx.send(embed=e)
 
-    @commands.command()
-    async def weeb(self, ctx, type=None):
+    @commands.command(aliases=['weeb', 'weebsh'])
+    async def action(self, ctx, type=None):
         '''Fetch a type from weeb.sh. Call without args to get a list of types.'''
-        head = {'Authorization': f'Wolke {self.config.weebsh}'}
-        types = self.config.weebtypes['types']
-        if type:
-            if type in types:
-                e = discord.Embed(color=ctx.author.color)
-                resp = await self.get(url=f'https://api.weeb.sh/images/random?type={type}', head=head)
-                resp = await resp.json()
-                e.set_image(url=resp['url'])
-                e.set_footer(text='Powered by weeb.sh')
-                await ctx.send(embed=e)
-            else:
-                await ctx.send(f'```{types}```')
+        types = await self.weeb.get_types()
+        if type and type in types:
+            e = discord.Embed()
+            i = await self.weeb.get_image(imgtype=type)
+            e.set_image(url=i[0])
+            e.set_footer(text='Powered by weeb.sh')
+            await ctx.send(embed=e)
         else:
-            await ctx.send(content=f'```{types}```')
+            types = ', '.join(f'`{type}`' for type in types)
+            await ctx.send(content=f'Invalid Type - Here\'s a list of valid types:\n\n{types}')
 
     @commands.command()
     async def slap(self, ctx, user: discord.User=None):
