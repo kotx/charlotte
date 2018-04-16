@@ -60,10 +60,10 @@ class Fun:
         '''Get a random cat image.'''
         
         fact = await self.bot.session.get(url='https://catfact.ninja/fact')
-        fact = await fact.json(content_type='text/html')
+        fact = await fact.json()
         e = discord.Embed(description=fact['fact'])
         resp = await self.bot.session.get(url='https://aws.random.cat/meow')
-        resp = await resp.json()
+        resp = await resp.json(content_type='text/html')
         e.set_image(url=resp['file'])
 
         e.set_footer(text='Powered by random.cat')
