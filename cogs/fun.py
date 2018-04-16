@@ -3,10 +3,12 @@
 from discord.ext import commands
 import discord
 import weeb
-import os.path
+import os
 import ujson
 import random
 import urllib.parse
+import qrcode
+import owo
 
 class Fun:
     """W-want to have some f-fun with me?"""
@@ -14,6 +16,30 @@ class Fun:
     def __init__(self, bot):
         self.bot = bot
         self.weeb = weeb.Client(token=bot.config.weebsh, user_agent="Weeb.py/1.1.0")
+
+    @commands.command()
+    async def lmgtfy(self, ctx, *, term):
+        '''Let me google that for you!'''
+        term = urllib.parse.quote_plus(term)
+        original = f'https://lmgtfy.com/?iie=1&q={term}'
+        try:
+            short = owo.shorten_urls(self.bot.config.owokey, original)
+        except Exception as e:
+            return await ctx.send(f'An error occured so I couldn\'nt shorten the url! `{e}`\n\n<{original}>')
+        await ctx.send(f'<{short[0]}>')
+    
+    @commands.command()
+    async def f(self, ctx):
+        '''Press f to pay respects~'''
+        await ctx.send(f'**{ctx.author.name}** has paid their respects :blue_heart:')
+
+    @commands.command(aliases=['qrcode'])
+    async def qr(self, ctx, *, content):
+        '''Creates a QR code.'''
+        img = qrcode.make(content)
+        img.save(f'cache/qrcode/{ctx.author.id}.png')
+        await ctx.send(file=discord.File(fp=f'cache/qrcode/{ctx.author.id}.png'))
+        os.remove(f'cache/qrcode/{ctx.author.id}.png')
 
     @commands.command()
     async def explosion(self, ctx):
