@@ -63,7 +63,7 @@ class Fun:
         fact = await fact.json()
         e = discord.Embed(description=fact['fact'])
         resp = await self.bot.session.get(url='https://aws.random.cat/meow')
-        resp = await resp.json(content_type='text/html')
+        resp = await resp.json()
         e.set_image(url=resp['file'])
 
         e.set_footer(text='Powered by random.cat')
