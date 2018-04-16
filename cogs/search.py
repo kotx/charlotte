@@ -169,7 +169,7 @@ class Search:
                 discord.Embed(
                     title=embed_title,
                     description=embed_content['desc'],
-                    color=ctx.author.color
+                    color=0x43b2c2
                 ).set_image(
                     url=embed_content['image']
                 ).set_thumbnail(

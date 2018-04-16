@@ -28,6 +28,12 @@ class Base:
         self._last_result = None
 
     # Stats
+
+    @commands.command()
+    async def vote(self, ctx):
+        embed = discord.Embed(title="Voting Link",
+                              description=f"https://discordbots.org/bot/{self.bot.user.id}/vote")
+        await ctx.send(embed=embed)
     
     @commands.command()
     async def source(self, ctx, *, command: str = None):

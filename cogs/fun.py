@@ -4,7 +4,6 @@ from discord.ext import commands
 import discord
 import weeb
 import os
-import ujson
 import random
 import urllib.parse
 import qrcode
@@ -64,7 +63,7 @@ class Fun:
         fact = await fact.json()
         e = discord.Embed(description=fact['fact'])
         resp = await self.bot.session.get(url='https://aws.random.cat/meow')
-        resp = ujson.loads(await resp.text())
+        resp = await resp.json()
         e.set_image(url=resp['file'])
 
         e.set_footer(text='Powered by random.cat')
@@ -84,9 +83,9 @@ class Fun:
     @commands.command()
     async def dog(self, ctx):
         '''Get a random dog image.'''
-        e = discord.Embed(color=ctx.author.color)
+        e = discord.Embed(color=0x43b2c2)
         resp = await self.bot.session.get(url='https://random.dog/woof.json')
-        resp = await resp.json()
+        resp = await resp.json(content_type='text/plain')
         e.set_image(url=resp['url'])
         e.set_footer(text='Powered by random.dog')
         await ctx.send(embed=e)
@@ -94,7 +93,7 @@ class Fun:
     @commands.command()
     async def birb(self, ctx):
         '''Get a random birb image.'''
-        e = discord.Embed(color=ctx.author.color)
+        e = discord.Embed(color=0x43b2c2)
         resp = await self.bot.session.get(url='https://random.birb.pw/tweet.json')
         resp = await resp.json(content_type='text/plain')
         e.set_image(url=f'https://random.birb.pw/img/{resp["file"]}')
@@ -104,7 +103,7 @@ class Fun:
     @commands.command()
     async def neko(self, ctx):
         '''Gets a random neko :3'''
-        e = discord.Embed(color=ctx.author.color)
+        e = discord.Embed(color=0x43b2c2)
         resp = await self.bot.session.get(url='https://nekos.life/api/neko')
         resp = await resp.json()
         e.set_image(url=resp['neko'])
@@ -115,7 +114,7 @@ class Fun:
     @commands.is_nsfw()
     async def lewdneko(self, ctx):
         '''Gets a random lewd neko o.o'''
-        e = discord.Embed(color=ctx.author.color)
+        e = discord.Embed(color=0x43b2c2)
         resp = await self.bot.session.get(url='https://nekos.life/api/lewd/neko')
         resp = await resp.json()
         e.set_image(url=resp['neko'])
