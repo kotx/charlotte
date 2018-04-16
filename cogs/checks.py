@@ -1,6 +1,7 @@
 import traceback
 import sys
 from discord.ext import commands
+import textwrap
 import discord
 
 """
@@ -22,7 +23,7 @@ http://discordpy.readthedocs.io/en/rewrite/ext/commands/api.html#errors
 """
 
 
-class CommandErrorHandler:
+class CommandHandler:
     def __init__(self, bot):
         self.bot = bot
 
@@ -32,6 +33,11 @@ class CommandErrorHandler:
         error : Exception"""
 
         await ctx.send(f'B-baka! You broke something! `{error}`')
+
+        error_channel = self.bot.get_channel(435276965361090560)
+        err = ''.join(traceback.format_exception(type(error), error, error.__traceback__))
+        e = discord.Embed(color=discord.Color.red(), title='Command Errored', description=f'```ini\n[ {ctx.command.qualified_name} ]\n{err}```')
+        await error_channel.send(embed=e)
 
         # This prevents any commands with local handlers being handled here in on_command_error.
         if hasattr(ctx.command, 'on_error'):
@@ -47,5 +53,11 @@ class CommandErrorHandler:
         if isinstance(error, ignored):
             return
 
+    async def on_command(self, ctx):
+        command_log = self.bot.get_channel(435287819385307137)
+        e = discord.Embed(color=0x43b2c2, title='Command Invoked')
+        e.description = textwrap.dedent(f'```ini\n[ ctx.command.qualified_name ]\nGuild ID: {ctx.guild.id}\nInvoker: {ctx.author.id}\nInvoker Name: {ctx.author.name}#{ctx.author.discriminator}\nMessage content: {ctx.message.content}```')
+        await command_log.send(embed=e)
+
 def setup(bot):
-    bot.add_cog(CommandErrorHandler(bot))
+    bot.add_cog(CommandHandler(bot))

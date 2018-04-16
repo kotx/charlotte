@@ -31,6 +31,24 @@ class Moderation:
                 e.add_field(name='Traceback', value=f'```py\n{err}```')
                 await ctx.send(embed=e)
 
+    @commands.command(aliases=['prune'])
+    async def purge(self, ctx, limit: int=None):
+        if limit is None:
+            await ctx.channel.purge()
+        else:
+            await ctx.channel.purge(limit=limit)
+
+    def is_me(self, m):
+        return m.author == self.bot.user
+
+    @commands.command()
+    async def clean(self, ctx, limit: int=None):
+        if limit is None:
+            deleted = await ctx.channel.purge(check=self.is_me)
+        else:
+            deleted = await ctx.channel.purge(check=self.is_me, limit=limit)
+        await ctx.send(f'Deleted {len(deleted)} messages(s)')
+
     @commands.guild_only()
     @commands.group()
     async def hoisters(self, ctx):
