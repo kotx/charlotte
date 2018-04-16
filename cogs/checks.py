@@ -56,7 +56,7 @@ class CommandHandler:
     async def on_command(self, ctx):
         command_log = self.bot.get_channel(435287819385307137)
         e = discord.Embed(color=0x43b2c2, title='Command Invoked')
-        e.description = textwrap.dedent(f'```ini\n[ {ctx.command.qualified_name} ]\nGuild ID: {ctx.guild.id}\nInvoker: {ctx.author.id}\nInvoker Name: {ctx.author.name}#{ctx.author.discriminator}\nMessage content: {ctx.message.content}```')
+        e.description = textwrap.dedent(f'```ini\n[ {ctx.command.qualified_name} ]\nGuild ID: {ctx.guild.id}\nChannel ID: {ctx.channel.id}\nInvoker: {ctx.author.id}\nInvoker Name: {ctx.author.name}#{ctx.author.discriminator}\nMessage content: {ctx.message.content}```')
         await command_log.send(embed=e)
 
 def setup(bot):
