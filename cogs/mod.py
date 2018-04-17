@@ -11,28 +11,64 @@ class Moderation:
         self.bot = bot
 
     @commands.command()
-    async def userinfo(self, ctx, user: discord.User):
+    async def userinfo(self, ctx, user: discord.User=None):
         '''Gets info about a user.'''
         async with ctx.typing():
+            if user is None:
+                user = ctx.author
             e = discord.Embed(color=0x43b2c2)
-            try:
-                username = f'{user.name}#{user.discriminator}'
-                join_date = user.created_at
-                e.set_image(url=user.avatar_url)
-                e.add_field(name='Name', value=username)
-                e.add_field(name='Account Created', value=join_date)
-                e.add_field(name='ID', value=user.id, inline=False)
-                e.add_field(name='Bot Account', value=user.bot)
-                e.add_field(name='Animated Avatar', value=user.is_avatar_animated())
-                await ctx.send(embed=e)
-            except Exception as err:
-                e = discord.Embed(color=0x43b2c2)
-                e.add_field(name='Why am I seeing this?', value='An error occured', inline=False)
-                e.add_field(name='Traceback', value=f'```py\n{err}```')
-                await ctx.send(embed=e)
+            username = f'{user.name}#{user.discriminator}'
+            join_date = user.created_at
+            e.set_image(url=user.avatar_url)
+            e.add_field(name='Name', value=username)
+            e.add_field(name='Account Created', value=join_date)
+            if ctx.guild:
+                join_guild_date = ctx.guild.get_member(user.id)
+                e.add_field(name='Joined Guild', value=join_guild_date, inline=False)
+            e.add_field(name='ID', value=user.id, inline=False)
+            e.add_field(name='Bot Account', value=user.bot)
+            e.add_field(name='Animated Avatar', value=user.is_avatar_animated())
+            await ctx.send(embed=e)
+
+    @commands.guild_only()
+    @commands.command()
+    async def guildinfo(self, ctx):
+        '''Gets info about the current guild.'''
+        async with ctx.typing():
+            e = discord.Embed(color=0x43b2c2)
+            info = {}
+            info['Creation Date'] = ctx.guild.created_at
+            info['Guild ID'] = ctx.guild.id
+            info['Roles'] = '\n'+''.join(f'\n{role.name}' for role in ctx.guild.roles) + '\n'
+            info['Emojis'] = len(ctx.guild.emojis)
+            info['Voice Region'] = ctx.guild.region
+            icon = ctx.guild.icon
+            info['Owner ID'] = ctx.guild.owner_id
+            info['Owner'] = f'{ctx.guild.owner.name}#{ctx.guild.owner.discriminator}'
+            info['2FA'] = 'On' if ctx.guild.mfa_level else 'Off'
+            info['Verification Level'] = ctx.guild.verification_level.name
+            info['Explicit Content'] = ctx.guild.explicit_content_filter.name
+            info['Features'] = '\n'.join(f'`{feature}`' for feature in ctx.guild.features)
+            info['Text Channels'] = len(ctx.guild.text_channels)
+            info['Voice Channels'] = len(ctx.guild.voice_channels)
+            info['Member Count'] = ctx.guild.member_count
+            info['Large'] = ctx.guild.large
+            
+
+            afk_timeout = ctx.guild.afk_timeout
+            if ctx.guild.afk_channel:
+                afk_channel = ctx.guild.afk_channel.name
+           
+            fmtinfo = []
+            for attr in info:
+                fmtinfo.append(f'{attr}: {info[attr]}')
+            
+            e.description = f'```ini\n[ {ctx.guild.name} ]\n' + '\n'.join(fmtinfo) + '```'
+            await ctx.send(embed=e)
 
     @commands.command(aliases=['prune'])
     async def purge(self, ctx, limit: int=None):
+        '''Purge messages from the current channel~'''
         if limit is None:
             await ctx.channel.purge()
         else:
@@ -43,6 +79,7 @@ class Moderation:
 
     @commands.command()
     async def clean(self, ctx, limit: int=None):
+        '''Cleans my messages~'''
         if limit is None:
             deleted = await ctx.channel.purge(check=self.is_me)
         else:

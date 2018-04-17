@@ -31,19 +31,13 @@ class CommandHandler:
         """The event triggered when an error is raised while invoking a command.
         ctx   : Context
         error : Exception"""
-
-        await ctx.send(f'B-baka! You broke something! `{error}`')
-
-        error_channel = self.bot.get_channel(435276965361090560)
-        err = ''.join(traceback.format_exception(type(error), error, error.__traceback__))
-        e = discord.Embed(color=discord.Color.red(), title='Command Errored', description=f'```ini\n[ {ctx.command.qualified_name} ]\n{err}```')
-        await error_channel.send(embed=e)
-
+        
+        ignored = (commands.CommandNotFound, commands.UserInputError)
+        
         # This prevents any commands with local handlers being handled here in on_command_error.
         if hasattr(ctx.command, 'on_error'):
             return
         
-        ignored = (commands.CommandNotFound, commands.UserInputError)
         
         # Allows us to check for original exceptions raised and sent to CommandInvokeError.
         # If nothing is found. We keep the exception passed to on_command_error.
@@ -52,6 +46,14 @@ class CommandHandler:
         # Anything in ignored will return and prevent anything happening.
         if isinstance(error, ignored):
             return
+
+
+        await ctx.send(f'B-baka! You broke something! `{error}`')
+
+        error_channel = self.bot.get_channel(435276965361090560)
+        err = ''.join(traceback.format_exception(type(error), error, error.__traceback__))
+        e = discord.Embed(color=discord.Color.red(), title='Command Errored', description=f'```ini\n[ {ctx.command.qualified_name} ]\n{err}```')
+        await error_channel.send(embed=e)
 
     async def on_command(self, ctx):
         command_log = self.bot.get_channel(435287819385307137)
