@@ -27,7 +27,7 @@ class Fun:
             return await ctx.send(f'An error occured so I couldn\'nt shorten the url! `{e}`\n\n<{original}>')
         await ctx.send(f'<{short[0]}>')
 
-    # @commands.command() might be breaking tos
+    # @commands.command() is breaking tos
     async def kms(self, ctx, user: discord.User=None):
         '''D-don't do that!'''
         async with ctx.typing():
