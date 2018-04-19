@@ -26,7 +26,46 @@ class Fun:
         except Exception as e:
             return await ctx.send(f'An error occured so I couldn\'nt shorten the url! `{e}`\n\n<{original}>')
         await ctx.send(f'<{short[0]}>')
-    
+
+    @commands.command()
+    async def kms(self, ctx, user: discord.User=None):
+        '''D-don't do that!'''
+        async with ctx.typing():
+            if user is None:
+                user = ctx.author
+
+            url = f'https://nekobot.xyz/api/imagegen?type=kms&url={user.avatar_url}'
+            r = await self.bot.session.get(url)
+            r = await r.json()
+            e = discord.Embed()
+            e.set_image(url=r['message'])
+            await ctx.send(embed=e)
+
+    @commands.command()
+    async def clyde(self, ctx, *, content):
+        '''Make Clyde say something!'''
+        async with ctx.typing():
+            url = urllib.parse.quote_plus(content)
+            fullurl = f'https://nekobot.xyz/api/imagegen?type=clyde&text={content}'
+            r = await self.bot.session.get(fullurl)
+            r = await r.json()
+            e = discord.Embed()
+            e.set_image(url=r['message'])
+            await ctx.send(embed=e)
+
+    @commands.command()
+    async def threats(self, ctx, user: discord.User=None):
+        '''Those are the 3 greatest threats to society! oh no!'''
+        async with ctx.typing():
+            if user is None:
+                user = ctx.author
+            fullurl = f'https://nekobot.xyz/api/imagegen?type=threats&url={user.avatar_url}'
+            r = await self.bot.session.get(fullurl)
+            r = await r.json()
+            e = discord.Embed()
+            e.set_image(url=r['message'])
+            await ctx.send(embed=e)
+        
     @commands.command()
     async def f(self, ctx):
         '''Press f to pay respects~'''
@@ -40,7 +79,7 @@ class Fun:
         await ctx.send(file=discord.File(fp=f'cache/qrcode/{ctx.author.id}.png'))
         os.remove(f'cache/qrcode/{ctx.author.id}.png')
 
-    @commands.command()
+    @commands.command(aliases=['megumin'])
     async def explosion(self, ctx):
         '''Megumin is here!'''
         url = await self.bot.session.get('https://megumin.torque.ink/api/explosion')
@@ -85,7 +124,7 @@ class Fun:
         '''Get a random dog image.'''
         e = discord.Embed(color=0x43b2c2)
         resp = await self.bot.session.get(url='https://random.dog/woof.json')
-        resp = await resp.json(content_type='text/plain')
+        resp = await resp.json()
         e.set_image(url=resp['url'])
         e.set_footer(text='Powered by random.dog')
         await ctx.send(embed=e)

@@ -23,7 +23,7 @@ class Moderation:
             e.add_field(name='Name', value=username)
             e.add_field(name='Account Created', value=join_date)
             if ctx.guild:
-                join_guild_date = ctx.guild.get_member(user.id)
+                join_guild_date = ctx.guild.get_member(user.id).joined_at
                 e.add_field(name='Joined Guild', value=join_guild_date, inline=False)
             e.add_field(name='ID', value=user.id, inline=False)
             e.add_field(name='Bot Account', value=user.bot)
