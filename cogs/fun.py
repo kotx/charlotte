@@ -54,6 +54,20 @@ class Fun:
             await ctx.send(embed=e)
 
     @commands.command()
+    async def captcha(self, ctx, user: discord.User=None, *, content):
+        '''Make a captcha~'''
+        async with ctx.typing():
+            if user is None:
+                user = ctx.author
+            url = urllib.parse.quote_plus(content)
+            fullurl = f'https://nekobot.xyz/api/imagegen?type=captcha&url={user.avatar_url}&username={url}'
+            r = await self.bot.session.get(fullurl)
+            r = await r.json()
+            e = discord.Embed()
+            e.set_image(url=r['message'])
+            await ctx.send(embed=e)
+
+    @commands.command()
     async def threats(self, ctx, user: discord.User=None):
         '''Those are the 3 greatest threats to society! oh no!'''
         async with ctx.typing():
