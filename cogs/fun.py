@@ -27,6 +27,16 @@ class Fun:
             return await ctx.send(f'An error occured so I couldn\'nt shorten the url! `{e}`\n\n<{original}>')
         await ctx.send(f'<{short[0]}>')
 
+    @commands.command()
+    async def anime(self, ctx):
+        '''Get an anime image uwu~'''
+        r = await self.bot.session.get('https://www.computerfreaker.cf/api/anime/read.php')
+        r = await r.json()
+        e = discord.Embed()
+        e.set_image(url=r['url'])
+        e.set_footer(text='Powered by computerfreaker.cf')
+        await ctx.send(embed=e)
+
     # @commands.command() is breaking tos
     async def kms(self, ctx, user: discord.User=None):
         '''D-don't do that!'''
