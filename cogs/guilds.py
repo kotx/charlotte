@@ -14,6 +14,8 @@ class Guilds:
         headers={'Content-Type': 'application/json', 'Authorization': self.bot.config.dbl})
         await self.bot.session.request('POST', f'https://discordbots.org/api/bots/{self.bot.user.id}/stats', data=ujson.dumps(payload, ensure_ascii=True),
         headers={'Content-Type': 'application/json', 'Authorization': self.bot.config.terminal})
+        await self.bot.session.request('POST', f'https://botlist.space/api/bots/{self.bot.user.id}', data=ujson.dumps(payload, ensure_ascii=True),
+        headers={'Content-Type': 'application/json', 'Authorization': self.bot.config.botlist})
         await asyncio.sleep(1)
 
     async def on_ready(self):
