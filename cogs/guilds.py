@@ -11,9 +11,9 @@ class Guilds:
         await self.bot.change_presence(activity=discord.Activity(name=f'$help | {len(self.bot.guilds)} guilds', type=discord.ActivityType.listening))
         payload = {'server_count': sum(1 for g in self.bot.guilds)}
         await self.bot.session.request('POST', f'https://ls.terminal.ink/api/v1/bots/{self.bot.user.id}', data=ujson.dumps(payload, ensure_ascii=True),
-        headers={'Content-Type': 'application/json', 'Authorization': self.bot.config.dbl})
-        await self.bot.session.request('POST', f'https://discordbots.org/api/bots/{self.bot.user.id}/stats', data=ujson.dumps(payload, ensure_ascii=True),
         headers={'Content-Type': 'application/json', 'Authorization': self.bot.config.terminal})
+        await self.bot.session.request('POST', f'https://discordbots.org/api/bots/{self.bot.user.id}/stats', data=ujson.dumps(payload, ensure_ascii=True),
+        headers={'Content-Type': 'application/json', 'Authorization': self.bot.config.dbl})
         await self.bot.session.request('POST', f'https://botlist.space/api/bots/{self.bot.user.id}', data=ujson.dumps(payload, ensure_ascii=True),
         headers={'Content-Type': 'application/json', 'Authorization': self.bot.config.botlist})
         await asyncio.sleep(1)
