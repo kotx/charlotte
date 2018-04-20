@@ -28,6 +28,15 @@ class Fun:
         await ctx.send(f'<{short[0]}>')
 
     @commands.command()
+    async def coffee(self, ctx):
+        '''Get coffee!'''
+        r = await self.bot.session.get('https://coffee.alexflipnote.xyz/random.json')
+        r = await r.json()
+        e = discord.Embed(description=':coffee:')
+        e.set_image(url=r['file'])
+        await ctx.send(embed=e)
+
+    @commands.command()
     async def anime(self, ctx):
         '''Get an anime image uwu~'''
         r = await self.bot.session.get('https://www.computerfreaker.cf/api/anime/read.php')
