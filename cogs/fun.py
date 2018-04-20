@@ -34,6 +34,7 @@ class Fun:
         r = await r.json()
         e = discord.Embed(description=':coffee:')
         e.set_image(url=r['file'])
+        e.set_footer(text='Powered by coffee.alexflipnote.xyz')
         await ctx.send(embed=e)
 
     @commands.command()
