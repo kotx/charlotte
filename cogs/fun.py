@@ -14,7 +14,9 @@ class Fun:
 
     def __init__(self, bot):
         self.bot = bot
-        self.weeb = weeb.Client(token=bot.config.weebsh, user_agent="Weeb.py/1.1.0")
+        self.weeb = weeb.Client(token=bot.config.weebsh, user_agent="Charlotte/1.0.0")
+                                                         # idk your version but its BOTNAME/VRESION + optional ENV
+                                                         # Like for Godavaru, I put Godavaru/2.1.3/Production
 
     @commands.command()
     async def lmgtfy(self, ctx, *, term):
