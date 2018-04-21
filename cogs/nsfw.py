@@ -7,11 +7,11 @@ from discord.ext import commands
 
 class NSFW:
     """"NSFW commands.
-    Most commands are "borrowed" from Godavaru, with little/no modification."""
+    Most commands are "borrowed" from Godavaru (https://github.com/Godavaru/Godavaru), with little/no modification."""
     def __init__(self, bot):
         self.bot = bot
     
-@commands.command()
+    @commands.command()
     @commands.is_nsfw()
     async def lewdneko(self, ctx):
         '''Gets a random lewd neko o.o'''

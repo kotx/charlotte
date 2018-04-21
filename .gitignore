@@ -27,3 +27,6 @@ var/
 # Our configuration files
 config.py
 cache/
+
+# idk how to organise
+.idea/
