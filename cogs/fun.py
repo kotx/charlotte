@@ -184,17 +184,6 @@ class Fun:
         await ctx.send(embed=e)
 
     @commands.command()
-    @commands.is_nsfw()
-    async def lewdneko(self, ctx):
-        '''Gets a random lewd neko o.o'''
-        e = discord.Embed(color=0x43b2c2)
-        resp = await self.bot.session.get(url='https://nekos.life/api/lewd/neko')
-        resp = await resp.json()
-        e.set_image(url=resp['neko'])
-        e.set_footer(text='Powered by nekos.life')
-        await ctx.send(embed=e)
-
-    @commands.command()
     async def xkcd(self, ctx, number=None):
         '''Get an xkcd comic.'''
         try:
