@@ -36,24 +36,24 @@ class Moderation:
         '''Gets info about the current guild.'''
         async with ctx.typing():
             e = discord.Embed(color=0x43b2c2)
+            info = {}
+            info['Creation Date'] = ctx.guild.created_at
+            info['Guild ID'] = ctx.guild.id
+            info['Roles'] = '\n'+''.join(f'\n{role.name}' for role in ctx.guild.roles) + '\n'
+            info['Emojis'] = len(ctx.guild.emojis)
+            info['Voice Region'] = ctx.guild.region
             icon = ctx.guild.icon
-            info = {
-                'Creation Date': ctx.guild.created_at,
-                'Guild ID': ctx.guild.id,
-                'Roles': '\n'+''.join(f'\n{role.name}' for role in ctx.guild.roles) + '\n',
-                'Emojis': len(ctx.guild.emojis),
-                'Voice Region': ctx.guild.region,
-                'Owner ID': ctx.guild.owner_id,
-                'Owner': f'{ctx.guild.owner}',
-                '2FA': 'On' if ctx.guild.mfa_level else 'Off',
-                'Verification Level': ctx.guild.verification_level.name,
-                'Explicit Content': ctx.guild.explicit_content_filter.name,
-                'Features': '\n'.join(f'`{feature}`' for feature in ctx.guild.features),
-                'Text Channels': len(ctx.guild.text_channels),
-                'Voice Channels': len(ctx.guild.voice_channels),
-                'Member Count': ctx.guild.member_count,
-                'Large': ctx.guild.large
-            }
+            info['Owner ID'] = ctx.guild.owner_id
+            info['Owner'] = f'{ctx.guild.owner.name}#{ctx.guild.owner.discriminator}'
+            info['2FA'] = 'On' if ctx.guild.mfa_level else 'Off'
+            info['Verification Level'] = ctx.guild.verification_level.name
+            info['Explicit Content'] = ctx.guild.explicit_content_filter.name
+            info['Features'] = '\n'.join(f'`{feature}`' for feature in ctx.guild.features)
+            info['Text Channels'] = len(ctx.guild.text_channels)
+            info['Voice Channels'] = len(ctx.guild.voice_channels)
+            info['Member Count'] = ctx.guild.member_count
+            info['Large'] = ctx.guild.large
+            
 
             afk_timeout = ctx.guild.afk_timeout
             if ctx.guild.afk_channel:

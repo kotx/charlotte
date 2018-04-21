@@ -22,7 +22,7 @@ class Levels:
             r = await r.json()
             if  r['code'] == 0:
                 rep = r['targetUser']['reputation']
-                await ctx.send(f'Successfully gave {user} 1 reputation! They now have `{rep}` reputation!')
+                await ctx.send('Successfully gave {user.name}#{user.discriminator} 1 reputation! They now have `{rep}` reputation!')
             else:
                 err = r['message']
                 await ctx.send(f'An error occured: `{err}`')
