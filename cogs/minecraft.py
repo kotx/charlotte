@@ -18,9 +18,9 @@ class Minecraft:
         if player is None:
             await ctx.send("B-baka! You need to s-specify a player!")
         else:
-            url = self.bot.session.get(f'https://api.hivemc.com/v1/player/{player}')
+            url = await self.bot.session.get(f'https://api.hivemc.com/v1/player/{player}')
             player = await url.json()
-            owo = f'```ini\n[ Player {player.username} ]\n\nUUID: {player.UUID}\nRank: {player.rankname}\nTokens: {player.tokens}\nCredits: {player.credits}```'
+            owo = f'```ini\n[ Player {player["username"]} ]\n\nUUID: {player["UUID"]}\nRank: {player["rankName"]}\nTokens: {player["tokens"]}\nCredits: {player["credits"]}```'
             e = discord.Embed(description=owo)
             await ctx.send(embed=e)
 
