@@ -49,7 +49,7 @@ class Premium:
         
         img.save(f'cache/thesearch/{ctx.author.id}.png')
         await ctx.send(file=discord.File(fp=f'cache/thesearch/{ctx.author.id}.png'))
-        os.remove('cache/thesearch/{ctx.author.id}.png')
+        os.remove(f'cache/thesearch/{ctx.author.id}.png')
 
     @is_premium()
     @commands.command(aliases=['peasants'])
