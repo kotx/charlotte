@@ -30,6 +30,36 @@ class Fun:
         await ctx.send(f'<{short[0]}>')
 
     @commands.command()
+    async def nichijou(self, ctx, text: str):
+        '''Nichijou OP!'''
+        await ctx.send('Generating image... this may take a while')
+        async with ctx.typing():
+            r = await self.bot.session.get(f'https://i.ode.bz/auto/nichijou?text={text}')
+            t = await r.read()
+
+            with open(f'cache/nichijou/{ctx.author.id}.gif', 'wb') as f:
+                f.write(t)
+
+            await ctx.send(file=discord.File(fp=f'cache/nichijou/{ctx.author.id}.gif'))
+
+            os.remove(f'cache/nichijou/{ctx.author.id}.gif')
+
+    @commands.command()
+    async def shy(self, ctx, url: str):
+        '''b-baka! I'm not shy!'''
+        await ctx.send('Generating image... this may take a while')
+        async with ctx.typing():
+            r = await self.bot.session.get(f'https://i.ode.bz/auto/shy?image={url}')
+            t = await r.read()
+
+            with open(f'cache/shy/{ctx.author.id}.png', 'wb') as f:
+                f.write(t)
+
+            await ctx.send(file=discord.File(fp=f'cache/shy/{ctx.author.id}.png'))
+
+            os.remove(f'cache/shy/{ctx.author.id}.png')
+
+    @commands.command()
     async def coffee(self, ctx):
         '''Get coffee!'''
         r = await self.bot.session.get('https://coffee.alexflipnote.xyz/random.json')
