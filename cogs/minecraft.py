@@ -10,7 +10,7 @@ class Minecraft:
     @commands.group()
     async def hivemc(self, ctx):
         """ HiveMC Group """
-        if ctx.invoked_without_subcommand:
+        if ctx.invoked_subcommand is None:
             await ctx.send(f"B-baka! V-view `{ctx.prefix}help hivemc`!")
 
     @hivemc.command()
