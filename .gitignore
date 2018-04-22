@@ -28,5 +28,5 @@ var/
 config.py
 cache/
 
-# idk how to organise
+# PyCharm
 .idea/
