@@ -30,6 +30,15 @@ class Fun:
         await ctx.send(f'<{short[0]}>')
 
     @commands.command()
+    async def yesorno(self, ctx, content=None):
+        async with ctx.typing():
+            r = await self.bot.session.get('https://yesno.wtf/api')
+            r = await r.json()
+            e = discord.Embed(description=f'L-looks like the answer is {r["answer"]}')
+            e.set_image(url=r['image'])
+            await ctx.send(embed=e)
+
+    @commands.command()
     async def nichijou(self, ctx, text: str):
         '''Nichijou OP!'''
         await ctx.send('Generating image... this may take a while')
