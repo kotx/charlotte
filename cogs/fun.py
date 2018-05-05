@@ -121,7 +121,7 @@ class Fun:
     @commands.command()
     async def anime(self, ctx):
         '''Get an anime image uwu~'''
-        r = await self.bot.session.get('https://www.computerfreaker.cf/api/anime/read.php')
+        r = await self.bot.session.get('https://api.computerfreaker.cf/v1/anime')
         r = await r.json()
         e = discord.Embed()
         e.set_image(url=r['url'])
