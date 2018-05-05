@@ -125,7 +125,7 @@ class Fun:
         r = await r.json()
         e = discord.Embed()
         e.set_image(url=r['url'])
-        e.set_footer(text='Powered by computerfreaker.cf')
+        e.set_footer(text='Powered by api.computerfreaker.cf')
         await ctx.send(embed=e)
 
     # @commands.command() is breaking tos
