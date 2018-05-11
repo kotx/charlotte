@@ -27,6 +27,29 @@ class Search:
                                 'I haven\'t the faintest idea.']
 
     @commands.command()
+    async def wikipedia(self, ctx, *, term:str):
+        '''Search wikipedia.'''
+
+        term = urllib.parse.quote_plus(term)
+        url = await self.bot.session.get(f'https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles={term}&redirects=1')
+ 
+        res = await url.json()
+
+        if res is None:
+            return await ctx.send("Something went wrong...")
+        
+        values = list(res['query']['pages'].values())
+
+        e = discord.Embed(title=values[0]['title'])
+        e.description = values[0]['extract'][:1000] + '...'
+
+
+        await ctx.send(embed=e)
+
+
+
+
+    @commands.command()
     async def urban(self, ctx, *, term: str):
         """Find the definition to \"wagwan\" or something """
 
