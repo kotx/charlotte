@@ -7,7 +7,6 @@ import os
 import random
 import urllib.parse
 import qrcode
-import owo
 
 class Fun:
     """W-want to have some f-fun with me?"""
@@ -63,11 +62,7 @@ class Fun:
         '''Let me google that for you!'''
         term = urllib.parse.quote_plus(term)
         original = f'https://lmgtfy.com/?iie=1&q={term}'
-        try:
-            short = owo.shorten_urls(self.bot.config.owokey, original)
-        except Exception as e:
-            return await ctx.send(f'An error occured so I couldn\'nt shorten the url! `{e}`\n\n<{original}>')
-        await ctx.send(f'<{short[0]}>')
+        await ctx.send(f'<{original}>')
 
     @commands.command()
     async def yesorno(self, ctx, content=None):
