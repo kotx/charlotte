@@ -4,6 +4,7 @@ from discord.ext import commands
 import discord
 import weeb
 import os
+import re
 import random
 import urllib.parse
 import qrcode
@@ -17,6 +18,18 @@ class Fun:
         self.weeb = weeb.Client(token=bot.config.weebsh, user_agent="Charlotte/1.0.0")
                                                          # idk your version but its BOTNAME/VRESION + optional ENV
                                                          # Like for Godavaru, I put Godavaru/2.1.3/Production
+    
+    @commands.command(aliases=['owofy'])
+    async def owoify(self, ctx, *, msg: str):
+        """Totally not copied from Godavaru"""
+        faces = ["(・`ω´・)", ";;w;;", "owo", "UwU", ">w<", "^w^"]
+        r = re.sub('(?:r|l)', "w", msg)
+        r = re.sub('(?:R|L)', "W", r)
+        r = re.sub('ove', 'uv', r)
+        r = re.sub('OVE', 'UV', r)
+        r = re.sub('(n|N)([aeiouAEIOU])', "\g<1>y\g<2>", r)
+        r = re.sub('!+', " " + random.choice(faces) + " ", r)
+        await ctx.send(r)
 
     @commands.command()
     async def osu(self, ctx, *, user):
