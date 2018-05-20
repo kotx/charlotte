@@ -139,7 +139,7 @@ class Base:
         # remove `foo`
         return content.strip('` \n')
     
-    @commands.command(hidden=True, aliases=['exec'])
+    @commands.command(hidden=True, aliases=['exec', 'sh'])
     @commands.is_owner()
     async def shell(self, ctx, *, command: str):
         """Run stuff"""
