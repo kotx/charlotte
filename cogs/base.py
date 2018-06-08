@@ -34,7 +34,15 @@ class Base:
         embed = discord.Embed(title="Voting Link",
                               description=f"https://discordbots.org/bot/{self.bot.user.id}/vote")
         await ctx.send(embed=embed)
-    
+
+    @commands.command()
+    async def invite(self, ctx):
+        embed = discord.Embed(title="Invite Links")
+        embed.add_field(name='Bot Invite', value='[Link](https://discordapp.com/oauth2/authorize?client_id=431164137968500746&permissions=8&scope=bot)')
+        embed.add_field(name='Minimal Bot Invite', value='[Link](https://discordapp.com/oauth2/authorize?client_id=431164137968500746&scope=bot)')
+        embed.add_field(name='Support Guild', value='[Link](https://discord.gg/R3HCMRU)')
+        await ctx.send(embed=embed)
+
     @commands.command()
     async def source(self, ctx, *, command: str = None):
         """Displays my full source code or for a specific command.
