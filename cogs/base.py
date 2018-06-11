@@ -4,7 +4,6 @@ import io
 import traceback
 import os
 import sys
-import textwrap
 from contextlib import redirect_stdout
 from discord.ext import commands
 import discord
