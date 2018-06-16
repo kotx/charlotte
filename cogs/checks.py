@@ -48,7 +48,7 @@ class CommandHandler:
             return
 
 
-        await ctx.send(f'B-baka! You broke something! `{error}`')
+        await ctx.send(f'B-baka! You broke something! `{error}`. If you think this is a mistake, feel free to report it at our support server( https://discord.gg/R3HCMRU )')
 
         error_channel = self.bot.get_channel(435276965361090560)
         err = ''.join(traceback.format_exception(type(error), error, error.__traceback__))

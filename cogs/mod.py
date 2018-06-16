@@ -67,6 +67,7 @@ class Moderation:
             await ctx.send(embed=e)
 
     @commands.command(aliases=['prune'])
+    @commands.has_permissions(manage_messages=True)
     async def purge(self, ctx, limit: int=None):
         '''Purge messages from the current channel~'''
         if limit is None:
