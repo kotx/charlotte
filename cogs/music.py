@@ -221,7 +221,7 @@ class Music:
 
         player.repeat = not player.repeat
 
-        await ctx.send('🔁 | ' + ('Looping' if player.repeat else 'Not looping')) + ' the queue! :>'
+        await ctx.send('🔁 | ' + ('Looping' if player.repeat else 'Not looping') + ' the queue! :>')
 
     @commands.command()
     async def remove(self, ctx, index: int):
