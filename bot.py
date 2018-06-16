@@ -11,7 +11,7 @@ class Bot(commands.AutoShardedBot):
     def __init__(self, **kwargs):
         super().__init__(command_prefix=commands.when_mentioned_or(*config.prefixes), **kwargs)
         self.config = config
-        self.session = aiohttp.ClientSession(loop=self.loop)
+        self.session = aiohttp.ClientSession(loop=self.loop, headers={'User-Agent': 'Charlotte/1.0.0'})
 
         async def _init_redis(self):
             self.redis = await aioredis.create_redis(address=config.redis['host'], password=config.redis['password'], loop=self.loop)
