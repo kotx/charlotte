@@ -30,12 +30,14 @@ class Base:
 
     @commands.command()
     async def vote(self, ctx):
+        """Displays a link to help this bot out! Vote now to support me ;3"""
         embed = discord.Embed(title="Voting Link",
                               description=f"https://discordbots.org/bot/{self.bot.user.id}/vote")
         await ctx.send(embed=embed)
 
     @commands.command()
     async def invite(self, ctx):
+        """Displays my bot invite link and support guild invite link."""
         embed = discord.Embed(title="Invite Links")
         embed.add_field(name='Bot Invite', value='[Link](https://discordapp.com/oauth2/authorize?client_id=431164137968500746&permissions=8&scope=bot)')
         embed.add_field(name='Minimal Bot Invite', value='[Link](https://discordapp.com/oauth2/authorize?client_id=431164137968500746&scope=bot)')
