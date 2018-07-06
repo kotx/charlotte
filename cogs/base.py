@@ -100,7 +100,7 @@ class Base:
         '''W-what are you looking at! P-pong!'''
         await ctx.send(f'w-what do you want from me? p-pong! ({round(self.bot.latency*1000)}ms)')
 
-    @commands.command()
+    @commands.command(aliases=['info', 'stats'])
     async def botinfo(self, ctx):
         '''Y-you wanna learn about me? p-perv!'''
         total_members = sum(1 for x in self.bot.get_all_members())
