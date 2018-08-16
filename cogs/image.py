@@ -6,24 +6,12 @@ import os
 from PIL import Image, ImageDraw, ImageFont
 import textwrap
 
-class Premium:
-    '''Upvote-locked commands uwu'''
+class ImageManipulation:
+    '''Image manipulation commands uwu'''
 
     def __init__(self, bot):
         self.bot = bot
 
-    class UserIsNotPremium(commands.CheckFailure):
-        pass
-
-    def is_premium():
-        async def predicate(ctx):
-            i = await ctx.bot.redis.get(ctx.author.id)
-            if i:
-                return True
-            raise UserIsNotPremium(f'{ctx.author} is not premium')
-        return commands.check(predicate)
-
-    @is_premium()
     @commands.command()
     async def fbi(self, ctx, *, search: str):
         '''OwO FBI i-is looking for u'''
@@ -37,7 +25,6 @@ class Premium:
         await ctx.send(file=discord.File(fp=f'cache/fbi/{ctx.author.id}.jpg'))
         os.remove(f'cache/fbi/{ctx.author.id}.jpg')
 
-    @is_premium()
     @commands.command()
     async def thesearch(self, ctx, *, text: str):
         '''Could it be this man?'''
@@ -51,7 +38,6 @@ class Premium:
         await ctx.send(file=discord.File(fp=f'cache/thesearch/{ctx.author.id}.png'))
         os.remove(f'cache/thesearch/{ctx.author.id}.png')
 
-    @is_premium()
     @commands.command(aliases=['peasants'])
     async def masterrace(self, ctx, *, args):
         '''Declare something as the master race. Separate with ' | '.'''
@@ -70,4 +56,4 @@ class Premium:
         os.remove(f'cache/peasants/{ctx.author.id}.png')
 
 def setup(bot):
-    bot.add_cog(Premium(bot))
+    bot.add_cog(ImageManipulation(bot))

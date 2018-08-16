@@ -5,18 +5,12 @@ from discord.ext import commands
 import discord
 import config
 import aiohttp
-import aioredis
 
 class Bot(commands.AutoShardedBot):
     def __init__(self, **kwargs):
         super().__init__(command_prefix=commands.when_mentioned_or(*config.prefixes), **kwargs)
         self.config = config
         self.session = aiohttp.ClientSession(loop=self.loop, headers={'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:62.0) Gecko/20100101 Firefox/62.0'}) # people hate crawlers I guess
-
-        async def _init_redis(self):
-            self.redis = await aioredis.create_redis(address=config.redis['host'], password=config.redis['password'], loop=self.loop)
-
-        self.loop.create_task(_init_redis(self))
 
         for cog in config.cogs:
             try:
