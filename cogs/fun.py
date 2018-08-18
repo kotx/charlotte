@@ -266,7 +266,7 @@ class Fun:
     async def neko(self, ctx):
         '''Gets a random neko :3'''
         e = discord.Embed(color=0x43b2c2)
-        resp = await self.bot.session.get(url='https://nekos.life/api/neko')
+        resp = await self.bot.session.get(url='https://nekos.life/api/v2/img/neko')
         resp = await resp.json()
         e.set_image(url=resp['neko'])
         e.set_footer(text='Powered by nekos.life')

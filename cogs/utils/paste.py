@@ -12,9 +12,9 @@ import aiohttp
 
 
 
-HASTEBIN_ENDPOINT = 'https://haste.torque.ink/documents'
+HASTEBIN_ENDPOINT = 'https://hastebin.com/documents'
 
-HASTEBIN_FMT = 'https://haste.torque.ink/{}'
+HASTEBIN_FMT = 'https://hastebin.com/{}'
 
 
 

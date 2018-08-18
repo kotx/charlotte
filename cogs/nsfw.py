@@ -16,7 +16,7 @@ class NSFW:
     async def lewdneko(self, ctx):
         '''Gets a random lewd neko o.o'''
         e = discord.Embed(color=0x43b2c2)
-        resp = await self.bot.session.get(url='https://nekos.life/api/lewd/neko')
+        resp = await self.bot.session.get(url='https://nekos.life/api/v2/img/lewd')
         resp = await resp.json()
         e.set_image(url=resp['neko'])
         e.set_footer(text='Powered by nekos.life')
