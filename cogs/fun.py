@@ -16,8 +16,6 @@ class Fun:
         self.bot = bot
         self.config = bot.config
         self.weeb = weeb.Client(token=bot.config.weebsh, user_agent="Charlotte/1.0.0")
-                                                         # idk your version but its BOTNAME/VRESION + optional ENV
-                                                         # Like for Godavaru, I put Godavaru/2.1.3/Production
     
     @commands.command(aliases=['owofy'])
     async def owoify(self, ctx, *, msg: str):
@@ -268,7 +266,7 @@ class Fun:
         e = discord.Embed(color=0x43b2c2)
         resp = await self.bot.session.get(url='https://nekos.life/api/v2/img/neko')
         resp = await resp.json()
-        e.set_image(url=resp['neko'])
+        e.set_image(url=resp['url'])
         e.set_footer(text='Powered by nekos.life')
         await ctx.send(embed=e)
 
