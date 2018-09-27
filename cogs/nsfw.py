@@ -18,7 +18,7 @@ class NSFW:
         e = discord.Embed(color=0x43b2c2)
         resp = await self.bot.session.get(url='https://nekos.life/api/v2/img/lewd')
         resp = await resp.json()
-        e.set_image(url=resp['neko'])
+        e.set_image(url=resp['url'])
         e.set_footer(text='Powered by nekos.life')
         await ctx.send(embed=e)
 
