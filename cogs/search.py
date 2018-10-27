@@ -50,6 +50,7 @@ class Search:
 
 
     @commands.command()
+    @commands.is_nsfw()
     async def urban(self, ctx, *, term: str):
         """Find the definition to \"wagwan\" or something """
 
