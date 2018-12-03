@@ -3,13 +3,13 @@ from discord.ext import commands
 import aiohttp
 
 class Minecraft:
-    """ A minecraft cog for you! >~< """
+    """ Searches for Minecraft-related stuff """
     def __init__(self, bot):
         self.bot = bot
 
     @commands.group()
     async def hivemc(self, ctx):
-        """ HiveMC Group """
+        """ HiveMC command cog """
         if ctx.invoked_subcommand is None:
             await ctx.send(f"B-baka! V-view `{ctx.prefix}help hivemc`!")
 
